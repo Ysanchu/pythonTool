@@ -1,0 +1,3 @@
+([('tkinterTest',
+   '/Users/yamanakayasuyuki/local-work/Mac_tool/python/pyinstaller/dist/tkinterTest',
+   'EXECUTABLE')],)

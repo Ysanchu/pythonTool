@@ -1,0 +1,12 @@
+# aaaaaaa
+# カンマ区切り
+#ホスト名     ,パスワード   , sshコマンド
+# <以下設定例>
+#testHostName , sshPassword ,  ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -l root
+yamanakayasuyukinoMacBook-Pro.local , yasuyuki   , ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -l root
+yamanakayasuyukinoMacBook-Pro.local , yasuyuki   , /usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+yamanakayasuyukinoMacBook-Pro.local ,	,	/usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+
+
+
+

@@ -1,0 +1,53 @@
+#
+# SSHリストファイル
+#「SSH実行ホスト名、パスワード(接続先)、sshコマンド」の情報を
+#    以下に記述して下さい。(★カンマ区切り)
+#hostname  , password  , sshCommand
+#
+# <記述例>
+#-----------------------------------
+#sd-tstctl-dms01 , ******** ,  ssh maintenance@192.168.1.33 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+#sd-tstctl-och01 , admin123 , ssh v3ctl@210.142.46.195 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+#-----------------------------------
+#
+yamanakayasuyukinoMacBook-Pro.local , yasuyuki   , ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -l root
+yamanakayasuyukinoMacBook-Pro , yasuyuki   , /usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+yamanakayasuyukinoMacBook-Pro ,  ,  /usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+
+
+
+
+
+
+
+
+##### 以下接続確認用 2020-07-16 山中
+# サーバ側
+sd-tstctl-och01,v3tatami,ssh v3ctl@192.168.13.15  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@pL0701    , ssh maintenance@192.168.1.33 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@pL0701    , ssh maintenance@192.168.1.34 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@pL0701    , ssh maintenance@192.168.1.36 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@pL0701    , ssh maintenance@192.168.1.37 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@pL0701    , ssh maintenance@192.168.1.38 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@dM0701    , ssh root@192.168.1.33 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@dM0701    , ssh root@192.168.1.34 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@dM0701    , ssh root@192.168.1.35 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@dM0701    , ssh root@192.168.1.36 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@dM0701    , ssh root@192.168.1.37 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-omm02 , #v3@dM0701    , ssh root@192.168.1.38 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@pL0701    , ssh maintenance@192.168.1.33 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@pL0701    , ssh maintenance@192.168.1.34 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@pL0701    , ssh maintenance@192.168.1.36 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@pL0701    , ssh maintenance@192.168.1.37 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@pL0701    , ssh maintenance@192.168.1.38 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@dM0701    , ssh root@192.168.1.33 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@dM0701    , ssh root@192.168.1.34 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@dM0701    , ssh root@192.168.1.35 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@dM0701    , ssh root@192.168.1.36 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@dM0701    , ssh root@192.168.1.37 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01 , #v3@dM0701    , ssh root@192.168.1.38 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+# 装置側
+sd-tstctl-och01  , v3v3v3 , ssh v3ctl@210.142.46.195 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+sd-tstctl-och01  , admin  , ssh admin@192.168.16.115 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+#sd-tstctl-och01 , v3v3v3 , ssh nosuser@27.90.163.250 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+

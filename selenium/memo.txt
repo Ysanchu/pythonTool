@@ -1,0 +1,89 @@
+
+■準備
+・Xcodeとhomebrewをインストールしておく
+
+ # xcode-select –install
+ # /usr/bin/ruby -e “$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)”
+
+  ※ brew doctor # 問題が無いか確認
+
+・Seleniumのインストール
+  # pip install selenium
+ 
+ ※pipが入っていなくて怒られる場合は下記のコマンドを実行して入れてください。
+  pipはPythonのパッケージ管理システムです。
+  # curl -kL https://bootstrap.pypa.io/get-pip.py | python
+
+・ ×Chrome Driverをインストールします
+   ×# brew install chromedriver
+
+  以下のURLからダウンロード
+  https://sites.google.com/a/chromium.org/chromedriver/downloads
+    ※Chromeとchromedriverのバージョンを揃えること！！！
+  $ mv ~/Downloads/chromedriver_mac64.zip ./
+  $ unzip chromedriver_mac64.zip 
+  $ mv chromedriver /usr/local/bin/
+  $ rm -f chromedriver_mac64.zip
+
+○非エンジニアのWebディレクターだけどSeleniumを触ってみた
+  https://liginc.co.jp/410999
+
+------------------------------------------------------------
+
+Python:Selenium webdriverよく使う操作メソッドまとめ
+https://qiita.com/mochio/items/dc9935ee607895420186
+■特定のURLでブラウザを起動する
+  driver.get("URL")
+■ページ遷移したいとき
+  driver.get("URL")
+■一つ前に戻りたいとき
+  driver.back()
+■一つ前に進みたいとき
+  driver.forward()
+■ブラウザを更新する
+  driver.refresh()
+■現在のURLを知りたいとき
+  driver.current_url
+■タイトルを知りたいとき
+  driver.title
+■ページのソースを取得したいとき
+  driver.page_source
+■ウインドウを閉じたいとき
+  driver.close()
+■すべてのウインドウを閉じたいとき
+  driver.quit()
+■ある要素を取得したいとき
+  driver.find_element_by_class_name("classname") # classでの指定
+  driver.find_element_by_id("id") # idでの指定
+  driver.find_element_by_xpath("xpath") # xpathでの指定
+■ある要素をクリックしたいとき
+  driver.find_element_by_xpath("XPATH").click()
+■ある要素までスクロールしたいとき
+  from selenium.webdriver.common.action_chains import ActionChains
+  element = driver.find_element_by_id("ID")
+  actions = ActionChains(driver)
+  actions.move_to_element(element)
+  actions.perform()
+■ドロップダウンを選択したいとき
+  element = driver.find_element_by_xpath("xpath")
+  Select(element).select_by_index(indexnum) # indexで選択
+  Select(element).select_by_value("value") # valueの値
+  Select(element).select_by_visible_text("text") # 表示テキスト
+■テキストを入力したいとき
+  driver.find_element_by_id("ID").send_keys("strings")
+■テキストを取得したいとき
+  driver.find_element_by_id("ID").text
+■属性を取得したいとき
+  driver.find_element_by_id("ID").get_attribute("value")
+■アラートをハンドリングしたいとき
+  Alert(driver).accept()
+■ウインドウサイズを最大にしたいとき
+  driver.maximize_window()
+■要素が表示されているかどうかを判定したいとき
+  driver.find_element_by_xpath("xpath").is_displayed()
+■要素が有効かどうかを判定したいとき
+  driver.find_element_by_xpath("xpath").is_enabled()
+■要素が選択されているかどうかを判定したいとき
+  driver.find_element_by_xpath("xpath").is_selected()
+
+

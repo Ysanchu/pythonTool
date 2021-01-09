@@ -1,0 +1,3 @@
+ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -l root : OK!
+/usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null : OK!
+/usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null : OK!

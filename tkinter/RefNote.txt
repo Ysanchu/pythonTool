@@ -1,0 +1,1912 @@
+
+https://note.com/kazztech/n/n048e8b5eef7a
+  ※ HTTPのページセーブしても、うまく行かなかった
+    NOTEはできないのだろう。
+
+note
+New Year Logo
+
+ログイン
+新規登録
+見出し画像
+[Python3] Tkinterでちょっとした画像加工アプリをつくるチュートリアル
+18
+
+kazz
+2018/12/14 17:14
+まえがき
+二十歳になったばっかりの
+kazz(@kzkzkazz)です。
+
+今回は、Python3のTkinterというライブラリを使い、ちょっとした画像加工アプリ(exe形式)を作るチュートリアルを行います。
+
+
+
+Tkinterとは。
+
+Tkinter は Python からGUIを構築・操作するための標準ライブラリ（ウィジェット・ツールキット）である。
+
+
+
+
+完成品はこんな感じ
+
+
+
+機能としてはこんな感じです
+
+・複数の画像を一括で指定px幅にリサイズ
+・画像名を指定してナンバリング (img_1.png, img_2.png, ...)
+・出力形式を選択 (png, jpeg)
+・もちろんGUI操作で動くようにする
+
+
+身につくスキル
+
+・tkinter開発
+・画像加工の基礎(サイズ変更程度)
+・pythonのあれこれ
+
+
+かなりハードルを下げた構成にしています。オブジェクト指向は取り入れていません。一から順にみていくのもいいし、分からない部分の解説だけみていくのもアリかなと思います。
+
+このチュートリアルはあくまでTkinterのチュートリアルであってpythonや画像加工の解説ではないです。また、最低限のpythonの文法くらいはおさえて挑んでください。
+
+
+
+事前準備
+筆者の環境：windows10 ノートpc
+※ MacOSでもexeファイルを実行できる手立てはあるようなので、多分大丈夫だと思います。
+
+このアプリを作るにあたって必要なものがいくつかあります。
+
+・pythonの実行環境
+・今回使うpythonパッケージ
+・できればテキストエディタ
+
+
+python実行環境
+コマンドプロンプトでpythonを実行でないかたは環境構築が必要です。
+
+導入については、いまさらここで長々と解説してもあれなので、こちらを参考下さい。
+
+【python基礎#01】Pythonの環境構築チュートリアル｜HelloWorld
+まったくのPython未経験者でも環境構築からビルド(実行)まで案内するチュートリアルです。
+it-bucket.com
+
+pythonパッケージのインストール
+pythonパッケージは、標準で搭載されているものもあれば、各自でインストールを行わなければ使えないものもあります。
+
+今回使うpythonパッケージは
+
+・tkinter (python標準)
+・os (python標準)
+・re (python標準)
+・cv2
+なので今回は、「cv2」というパッケージをインストールする必要があります。これは、画像を加工する際に便利なパッケージです。
+
+ディレクトリはどこでもいいので、コマンドプロンプトで以下のコマンドを実行します。
+
+pip install opencv-python
+成功したらこんな画面になります。
+
+
+
+以後、パッケージをインストールするときは、このコマンドで行います。
+
+pip install <パッケージ名>
+
+
+テキストエディタ
+これを見ている人は大抵テキストエディタを使っていると思いますが、もし使っていないという方がいれば、以下をおすすめします。
+
+・Sublime text3
+・VSCode
+メモ帳では厳しいです。シンタックスハイライト欲しいですし。
+
+
+
+Tkinterを使ってみる
+とりあえずTkinter実際に動かしてみましょう。細かい説明はそれからです。
+
+ちなみにTkinterリファレンスです。今回使っていないプロパティなどはここに全部載ってますので、リファレンスと当チュートリアルを平行で見ていくのがいいかなと思います。
+
+Tkinter 8.5 reference: a GUI for Python
+Describes the Tkinter widget set for constructing graphical u
+infohost.nmt.edu
+まずはプログラムを書くファイルを用意します。
+
+デスクトップを右クリックし、新規作成からフォルダーを作成、名前は分かりやすいように「tk_app」にしておきます。
+
+その「tk_app」の中にテキストドキュメントを新規作成し、名前を「main.py」に変更します。
+
+
+
+「main.py」の「main」の部分は好きな名前でも結構ですが、拡張子(ドット以降の文字)は、必ず「py」にして下さい。
+
+main.pyをテキストエディタで開くと、もちろんながら、まだ何も書いてありません。
+
+
+
+「main.py」に以下のコードをそっくりそのままコピペしてください。
+
+import tkinter as tk
+
+### この下に関数を書く ###
+
+if __name__ == "__main__":
+	# メインウィンドウ
+	root = tk.Tk()
+
+	### この下に描画内容を書く ###
+
+	# 描画
+	root.mainloop()
+tkinterパッケージを使うことをここで明示します。
+
+# import <パッケージ名> as <別名>
+import tkinter as tk
+プログラムが実行されたときに実行する処理をこの中に書きます。tkinterでは主に描画するプログラムをここに書きます。
+
+if __name__ == "__main__":
+メインウィンドウを生成して描画する。この2つの処理はtkinterにおいて必須となります。
+
+# メインウィンドウ生成
+root = tk.Tk()
+
+### この下に描画内容を書く ###
+
+# 描画
+root.mainloop()
+
+
+コピペしたらしっかり保存し、コマンドプロンプトで「main.app」のあるディレクトリまで移動します。
+
+cd desktop/tk_app
+そしてmain.pyを実行します。python <ファイル名>
+
+python main.py
+真っ白のウィンドウが表示されました。これからは、このウィンドウに肉付けしていく感じでどんどん機能を追加していきます。
+
+
+
+
+
+ウィンドウの設定
+先ほどは最低限の処理でウィンドウを表示させましたが、流石に寂しすぎますね。タイトルやウィンドウサイズを指定しましょう。
+
+ウィンドウ生成の下に以下の4行を追加して実行してみましょう。
+
+# メインウィンドウ生成
+root = tk.Tk()
+
+### 追加部分 ###
+# ウィンドウタイトルを指定
+root.title("Image editing app")
+# ウィンドウサイズを指定
+root.geometry("400x550")
+# ウィンドウサイズの変更可否設定
+root.resizable(0,0)
+# ウィンドウの背景色
+root.configure(bg="white")
+
+### この下に描画内容を書く ###
+
+# 描画
+root.mainloop()
+root.title()でウィンドウ左上のタイトルを指定します。
+
+# ウィンドウタイトルを指定
+root.title("Image editing app")
+root.geometry("縦x横")でウィンドウサイズを指定します。xはアルファベットの小文字エックスです。紛らわしいですね。
+
+# ウィンドウサイズを指定
+root.geometry("400x550")
+root.resizable(縦,横)でウィンドウサイズ変更の可否を指定します。例えば縦方向だけ変更可能にしたい場合はroot.resizable(1,0)になります。
+
+# ウィンドウサイズの変更可否設定
+root.resizable(0,0)
+root.configure()でrootの設定を指定します。root.configure(bg="white")で、rootの背景を白にします。
+
+# ウィンドウの背景色
+root.configure(bg="white")
+いろいろ手を加えたので、これまでのまとめ版を確認しておきましょう。
+
+import tkinter as tk
+
+### この下に関数を書く ###
+
+if __name__ == "__main__":
+	# メインウィンドウ生成
+	root = tk.Tk()
+
+	### 追加部分 ###
+	# ウィンドウタイトルを指定
+	root.title("Image editing app")
+	# ウィンドウサイズを指定
+	root.geometry("400x550")
+	# ウィンドウサイズの変更可否設定
+	root.resizable(0,0)
+	# ウィンドウの背景色
+	root.configure(bg="white")
+
+	### この下に描画内容を書く ###
+
+	# 描画
+	root.mainloop()
+では実行。以後、実行といったらこのコマンド！お忘れなく！
+
+python main.py
+土台ができました。設定が適応されてますね。
+
+
+
+
+ウィジェットを描画してみる
+tkinterにおけるウィジェットとは、テキストや入力ボックスなどのパーツを指し、それらのウィジェットを組み合わせてGUIアプリケーションを作っていきます。
+
+tkinterに存在するウィジェット(抜粋)
+
+Button Canvas Checkbutton Entry Frame Label LabelFrame Listbox Menu  Message Radiobutton Scale Scrollbar Spinbox Text ...
+
+
+ラベル(静的テキスト)の設置
+
+下記2行のコードを「main.py」の### この下に描画内容を書く ###の下にコピペしてください。
+
+### この下に描画内容を書く ###
+lbl1 = tk.Label(root)
+lbl1.configure(text="てきすと")
+lbl1.pack()
+tk.Label(親要素)でLabelを生成。Labelは静的テキストです。
+
+# ラベルを生成
+lbl1 = tk.Label(root)
+lbl1のテキストを"てきすと"に設定。
+
+# ラベルの設定
+lbl1.configure(text="てきすと")
+そしてこの1行で描画。
+
+# ラベル描画
+lbl1.pack()
+
+
+実行します。
+
+
+
+真ん中に堂々と出てきました。
+
+tkinterの仕様として、あらゆるウィジェットは、中央揃えで描画されます。
+
+とりあえず、この中央揃えと、地味に気になるラベルの背景色を変えちゃいます。
+
+lbl1 = tk.Label(root)
+lbl1.configure(text="てきすと")
+lbl1.pack()
+の部分を下記のように書き換えます。
+
+lbl1 = tk.Label(root)
+lbl1.configure(text="てきすと", bg="white")
+lbl1.pack(anchor="nw")
+rootの設定の時と同じで、背景色を白に指定します。
+
+lbl1.configure(text="てきすと", bg="white")
+表示方法を括弧内で指定します。anchor="nw"で左詰め＆上詰めで描画します。東西南北の英語の頭文字(w,e,s,n)をとったもので、例えば単に左詰めの場合はanchor="w"とします。
+
+lbl1.pack(anchor="nw")
+実行します。
+
+
+
+ウィジェットは、Labelのほかにもたくさん存在しています。ついでにボタンも設置してみましょう。
+
+
+
+lbl1の下にbtn1の下記のコードを貼り付けます。
+
+lbl1 = tk.Label(root)
+lbl1.configure(text="てきすと", bg="white")
+lbl1.pack(anchor="nw")
+
+btn1 = tk.Button(root)
+btn1.configure(text="ぼたん")
+btn1.pack(anchor="s")
+実行。押せるボタンが出現。まだアクションはつけてません。
+
+
+
+ん？どうなってんだ？
+
+実際はこんな感じです↓
+
+
+
+rootが縦横いっぱいに広がっていて、そこにウィジェットが上から詰められる感じですね。
+
+
+
+grid描画
+
+基本はこのpack()を使って描画しますが、ほかにも表形式に描画するgrid()もあります。
+
+では実際にgrid描画を使ってみましょう。
+
+先ほどのラベルとボタンは消して、このコードに書き換えてください。
+
+btn1 = tk.Button(root)
+btn1.configure(text="ぼたん1")
+btn1.grid(row=0, column=0)
+btn2 = tk.Button(root)
+btn2.configure(text="ぼたん2")
+btn2.grid(row=0, column=1)
+btn3 = tk.Button(root)
+btn3.configure(text="ぼたん3")
+btn3.grid(row=1, column=1)
+row：行、column：列。btn1を1行目1列目に配置することを指します。0から始まるので注意。
+
+btn1.grid(row=0, column=0)
+実行。これは分かりやすいですね。
+
+
+
+図解するとこんな感じ。もちろん任意で列も行も増やせます。
+
+
+
+
+
+フレーム化
+
+Frameという特殊なウィジェットを使い、複数のウィジェットをひとつのウィジェットとして扱う事が出来ます。これはtkinterにおいて大事な要素の1つなので、必ずおさえておきましょう。
+
+こんな感じで、フレームを作成した後、そのフレームを親としてラベルとボタンを生成します。
+
+Frm1 = tk.Frame(root)
+Frm1.pack()
+
+lbl1 = tk.Label(Frm1)
+lbl1.configure(text="ボタンおしてね->")
+lbl1.pack()
+
+btn1 = tk.Button(Frm1)
+btn1.configure(text="ボタン")
+btn1.pack()
+こんなイメージ。
+
+
+
+もちろんこのようにFrame自体にanchor="w"などの指定もできます。
+
+Frm1 = tk.Frame(root)
+Frm1.pack(anchor="w")
+
+lbl1 = tk.Label(Frm1)
+lbl1.configure(text="ボタンおしてね->")
+lbl1.pack()
+
+btn1 = tk.Button(Frm1)
+btn1.configure(text="ボタン")
+btn1.pack()
+ここまでは基本中の基本です。それでは実際にアプリケーション開発に取り掛かりましょう！
+
+
+
+開発開始！
+もう一度、機能と画面を確認しましょう。
+
+・複数の画像を一括で指定px幅にリサイズ
+・画像名を指定してナンバリング (img_1.png, img_2.png, ...)
+・出力形式を選択 (png, jpeg)
+・もちろんGUI操作で動くようにする
+
+
+
+
+※ 先に完成版のプログラムとアプリケーションを配布しておきます。ご活用ください。
+
+tk_app.zip
+Shared with Dropbox
+www.dropbox.com
+※ プロパティ毎の解説は最低限にしていますので、このリファレンスと並行して確認するとよりいいのかなと思います。(クロームの翻訳機能使えます)
+
+Tkinter 8.5 reference: a GUI for Python
+Describes the Tkinter widget set for constructing graphical u
+infohost.nmt.edu
+まずはこの状態に戻してください。
+
+import tkinter as tk
+
+### この下に関数を書く ###
+
+if __name__ == "__main__":
+	# メインウィンドウ生成
+	root = tk.Tk()
+	# ウィンドウタイトルを指定
+	root.title("Image editing app")
+	# ウィンドウサイズを指定
+	root.geometry("400x550")
+	# ウィンドウサイズの変更可否設定
+	root.resizable(0,0)
+	# ウィンドウの背景色
+	root.configure(bg="white")
+
+	### この下に描画内容を書く ###
+
+	# 描画
+	root.mainloop()
+
+
+余白用のFrame設置
+
+まずは全体を囲うFrameを設置します。
+
+
+
+### この下に描画内容を書く ###
+# ラッパーフレーム
+wrpFrm = tk.Frame(root)
+wrpFrm.configure(bg="white")
+wrpFrm.pack(padx=3, pady=3, fill="both", expand=1)
+復習ですが、カッコ内には親の要素の名前を入れます。
+
+wrpFrm = tk.Frame(root)
+padx, padyは、ウィジェット外側の余白。fill="both"は縦横いっぱいに配置する。expend=1で、Frameを親(root)のサイズに依存するようにします。
+
+wrpFrm.pack(padx=3, pady=3, fill="both", expand=1)
+
+
+では実行。こちらでは、分かりやすいようにFrameの背景を黒にしています。周りに3pxの余白があることを確認。
+
+
+
+
+
+ツリービュー設置
+
+次に、取り込んだ画像の一覧を表示するリストを出します。
+
+
+
+まず、一番上でttkをimportします。ttkとは、tkinterの拡張機能のようなもので、いくつか使えるウィジェットが増えます。
+
+import tkinter as tk
+import tkinter.ttk as ttk
+早速、ttkのツリービューを使っていきます。
+
+# 読み込んだ画像リスト
+imgList = ttk.Treeview(wrpFrm)
+imgList.configure(column=(1,2), show="headings", height=6)
+imgList.column(1, width=30)
+imgList.column(2, width=361)
+imgList.heading(1, text="No")
+imgList.heading(2, text="path/name")
+imgList.pack()
+たびたびですが、今回の親要素はwrpFrmなので注意。
+
+imgList = ttk.Treeview(wrpFrm)
+column=(1,2)で、列を生成します。1,2とは別名のことで、文字列で命名することも可能です。show="headings"は、今回使用する表形式のウィジェットのことです。height=6で表示数を6件にします。
+
+imgList.configure(column=(1,2), show="headings", height=6)
+列にそれぞれ幅を持たせます。1,2は列の別名です。
+
+imgList.column(1, width=30)
+imgList.column(2, width=361)
+列の先頭に表示するヘッダーの設定です。
+
+imgList.heading(1, text="No")
+imgList.heading(2, text="path/name")
+実行します。出ましたね。
+
+
+
+
+
+ボタン設置
+
+今度はフレームを使って2つのボタンを並べて中央揃えします。
+
+
+
+新しいことはside="left"くらいですかね。これは、親要素の幅の許す限りウィジェットを左詰めしていくみたいなイメージです。ワード等の右側折り返しみたいな感じで。
+
+# ボタン中央揃え用のフレーム
+btnFrm = tk.Frame(wrpFrm)
+btnFrm.configure(bg="white")
+btnFrm.pack(pady=5)
+
+# 画像追加ボタン
+addBtn = tk.Button(btnFrm)
+addBtn.configure(text="画像を追加")
+addBtn.pack(side="left", padx=5)
+
+# 画像リセットボタン
+resetBtn = tk.Button(btnFrm)
+resetBtn.configure(text="画像をリセット")
+resetBtn.pack(side="left", padx=5)
+実行。いい感じですね。
+
+
+
+設定項目のグリッド
+
+完成形のこれ、真ん中あたりの4行。これはgrid描画が使えそうですね。
+
+
+
+こんな感じ。
+
+
+
+Tkinterの仕様上、gridとpackを同じ階層で使う事が出来ません。なので、まずはFrameを用意し、その中でgrid配置を行います。
+
+# グリッド用のFrame
+confGridFrm = tk.Frame(wrpFrm)
+confGridFrm.configure(bg="white")
+confGridFrm.pack(padx=3, pady=3, fill="x")
+
+
+fill="x"で横幅いっぱいに広げます。
+
+confGridFrm.pack(padx=3, pady=3, fill="x")
+
+
+続けてチェックボックスを設置します。
+
+# チェックボックス設置
+renameChkVar = tk.BooleanVar()
+renameChkVar.set(True)
+renameChk = tk.Checkbutton(confGridFrm)
+renameChk.configure(
+	text="リネームする",
+	variable=renameChkVar,
+	bg="white")
+renameChk.grid(row=0, column=0, sticky="nw")
+チェックボックスを設置する前に、チェックボックスの値を保持する変数を作っておく必要があります。単にTrueまたはFalseではなく、Tkinter特有のBooleanVarというもので管理されます。
+
+renameChkVar = tk.BooleanVar()
+そして、初期値としてTrue(チェック状態)を入れておきます。
+
+renameChkVar.set(True)
+configureのvariableで先ほど作ったチェックボックス用の変数を指定します。
+
+renameChk = tk.Checkbutton(confGridFrm)
+renameChk.configure(
+	text="リネームする",
+	variable=renameChkVar,
+	bg="white")
+sticky="nw"で、左上寄せします。これはgrid特有のものです。
+
+renameChk.grid(row=0, column=0, sticky="nw")
+
+
+ここで実行してみましょう。まあ、まだ1行1列の表なので表とは言えませんが。
+
+
+
+
+
+更にグリッド
+
+完成品の一行目の二列目を見てください。これもgridで実装出来そうですね。
+
+
+
+こんな感じで。
+
+
+
+特殊なFrameのLabelFrameを使います。こんな感じで、タイトルと枠線でなるFrameです。
+
+
+
+# ネームルールフレーム
+renameFrm = tk.LabelFrame(confGridFrm)
+renameFrm.configure(bg="white", text="リネームルール", relief="groove")
+renameFrm.grid(row=0, column=1, pady=(0,5))
+relief="groove"は、フレームのデザインです。labelanchorはラベルの位置です。主に使うのはnw(北西), n(北), ne(北東)です。
+
+renameFrm.configure(text="リネームルール", relief="groove", bg="white")
+reliefは5種類から選べます。デフォルトはgroove。
+
+
+
+実はpadx,padyは、タプルで指定することもできます。pady=(0,5)で、下方向のみの余白を設定します。
+
+renameFrm.grid(row=0, column=1, pady=(0,5))
+
+
+余白を持たせるために、さらにフレームを入れ子し、その中にgridしていきます。
+
+# レイアウト用のFrame
+renameFrmInn = tk.Frame(renameFrm)
+renameFrmInn.configure(bg="white")
+renameFrmInn.pack(padx=8, pady=(0,5))
+
+# ファイル名
+fNameLbl = tk.Label(renameFrmInn)
+fNameLbl.configure(text="ファイル名", bg="white")
+fNameLbl.grid(row=0, column=0, sticky="nw")
+
+# ファイル名入力欄
+fNameEnt = tk.Entry(renameFrmInn)
+fNameEnt.insert("end", "img")
+fNameEnt.grid(row=0, column=1, pady=(0,2))
+Entryウィジェットは、テキスト入力欄です。似たものにtextがありますが、textは複数行、Entryは一行という違いがあります。
+
+fNameEnt = tk.Entry(renameFrmInn)
+insertで、入力欄に初期値を持たせます。本来はend(末尾)に文字列"img"を挿入するというものですが、もともと何も入っていないので初期値設定として使えます。
+
+fNameEnt.insert("end", "img")
+実行。この調子でリネームルールを完成させます。
+
+
+
+
+
+少しまとめて追加。
+
+# 開始番号
+fNumLbl = tk.Label(renameFrmInn, text="開始番号")
+fNumLbl.configure(bg="white")
+fNumLbl.grid(row=1, column=0, sticky="w")
+
+# 開始番号入力欄
+fNumEnt = tk.Entry(renameFrmInn, width=10)
+fNumEnt.insert("end", "1")
+fNumEnt.grid(row=1, column=1, sticky="w")
+
+# アンダーバーチェック
+usChkVar = tk.BooleanVar()
+usChkVar.set(True)
+usChk = tk.Checkbutton(renameFrmInn)
+usChk.configure(
+	bg="white",
+	text="区切り文字にアンダースコア(_)を使用する",
+	variable=usChkVar)
+usChk.grid(row=2, column=0, columnspan=2, sticky="nw")
+
+# 出力結果タイトル
+nResLbl = tk.Label(renameFrmInn)
+nResLbl.configure(bg="white", text="出力結果例")
+nResLbl.grid(row=3, column=0)
+
+# 出力結果
+nResOut = tk.Label(renameFrmInn)
+nResOut.configure(bg="white", text="img_1.png")
+nResOut.grid(row=3, column=1)
+columnspan=2で、列の結合を行います。3つ結合するなら=3。
+
+usChk.grid(row=2, column=0, columnspan=2)
+
+
+実行。
+
+
+
+
+
+一気に追加。
+
+# リサイズチェック
+resizeChkVar = tk.BooleanVar()
+resizeChkVar.set(True)
+resizeChk = tk.Checkbutton(confGridFrm)
+resizeChk.configure(
+	bg="white",
+	text="幅を固定値でリサイズ",
+	variable=resizeChkVar)
+resizeChk.grid(row=3, column=0, padx=(0,15), sticky="nw")
+
+# リサイズ幅設定フレーム
+resizeFrm = tk.Frame(confGridFrm)
+resizeFrm.configure(bg="white")
+resizeFrm.grid(row=3, column=1, sticky="nw", pady=(0,5))
+
+# "幅"
+resizeLbl1 = tk.Label(resizeFrm)
+resizeLbl1.configure(bg="white", text="幅")
+resizeLbl1.pack(side="left")
+
+# 幅指定入力欄
+resizeEnt = tk.Entry(resizeFrm)
+resizeEnt.configure(width=10, relief="groove")
+resizeEnt.insert("end", "600")
+resizeEnt.pack(side="left", padx=(15,0))
+
+# "px"
+resizeLbl2 = tk.Label(resizeFrm)
+resizeLbl2.configure(bg="white", text="px")
+resizeLbl2.pack(side="left")
+
+# 拡張子指定タイトル
+extTtlLbl = tk.Label(confGridFrm)
+extTtlLbl.configure(bg="white", text="拡張子を指定")
+extTtlLbl.grid(row=4, column=0, sticky="nw")
+
+# 拡張子フレーム
+extFrm = tk.Frame(confGridFrm)
+extFrm.configure(bg="white")
+extFrm.grid(row=4, column=1, sticky="nw", pady=(0,5))
+
+# "形式"
+extLbl = tk.Label(extFrm)
+extLbl.configure(bg="white", text="形式")
+extLbl.pack(side="left")
+
+# 拡張子セレクト
+extSelect = ttk.Combobox(extFrm)
+extSelect.configure(
+	width=8,
+	value = ("png", "jpeg"))
+extSelect.current(0)
+extSelect.pack(side="left", padx=(3,0))
+
+# 保存先タイトル
+acvTtlLbl = tk.Label(confGridFrm)
+acvTtlLbl.configure(bg="white", text="保存先を選択")
+acvTtlLbl.grid(row=5, column=0, sticky="nw")
+
+# 保存先フレーム
+acvFrm = tk.Frame(confGridFrm)
+acvFrm.configure(bg="white")
+acvFrm.grid(row=5, column=1, sticky="nw", pady=(0,5))
+
+# 保存先テキスト
+acvEnt = tk.Entry(acvFrm)
+acvEnt.configure(width=33)
+acvEnt.insert(0, "未選択")
+acvEnt.configure(state="disabled")
+acvEnt.pack(side="left")
+
+# 保存先参照ボタン
+acvBtn = tk.Button(acvFrm)
+acvBtn.configure(text="参照")
+acvBtn.pack(side="left")
+ここで新出のCombobox。セレクトボタンです。
+
+# 拡張子セレクト
+extSelect = ttk.Combobox(extFrm)
+extSelect.configure(
+    state="readonly",
+    width=8,
+    value = ("png", "jpeg"))
+extSelect.current(0)
+extSelect.pack(side="left", padx=(3,0))
+Comboboxはttkのウィジェットです。
+
+extSelect = ttk.Combobox(extFrm)
+state="readonly"で手書き変更不可に。valueで選択肢を指定します。
+
+extSelect.configure(
+    state="readonly",
+    width=8,
+    value=("png", "jpeg"))
+初期値設定。valueの添え字で指定します。
+
+extSelect.current(0)
+実行。
+
+
+
+あとすこしでレイアウトが完成します。
+
+
+
+
+
+ウィジェットのコードはこれがラストです。
+
+# 実行ボタン
+runBtn = tk.Button(wrpFrm)
+runBtn.configure(text="実行", command=img_trans)
+runBtn.pack(
+    anchor="e",
+    pady=(0,5), padx=(0,5),
+    ipadx=15, ipady=1)
+
+# 通知リスト
+msgList = tk.Listbox(wrpFrm)
+msgList.configure(height=6, width=65)
+msgList.pack()
+
+# 進捗バー
+pb = ttk.Progressbar(wrpFrm)
+pb.configure(
+    maximum=10,
+    orient="horizontal")
+pb.pack(pady=(4,0), fill="x")
+ipadx,ipadyで内側のパディングを指定します。
+
+runBtn.pack(
+    anchor="e",
+    pady=(0,5), padx=(0,5),
+    ipadx=15, ipady=1)
+ボタン内側の余白がとられます。
+
+
+
+プログレスバーは、maximumで最大値を設定して、valueで値を反映させます。orientで水平バーか垂直バーを指定します。
+
+pb = ttk.Progressbar(wrpFrm)
+pb.configure(
+    maximum=10,
+    orient="horizontal")
+例えばmax=10,value=5に設定したら、こうなります。
+
+pb.configure(
+    value= 5,
+    maximum=10,
+    orient="horizontal")
+
+
+
+
+一旦総括
+
+import tkinter as tk
+import tkinter.ttk as ttk
+
+### この下に関数を書く ###
+
+if __name__ == "__main__":
+	# メインウィンドウ生成
+	root = tk.Tk()
+	# ウィンドウタイトルを指定
+	root.title("Image editing app")
+	# ウィンドウサイズを指定
+	root.geometry("400x550")
+	# ウィンドウサイズの変更可否設定
+	root.resizable(0,0)
+	# ウィンドウの背景色
+	root.configure(bg="white")
+
+	### この下に描画内容を書く ###
+	wrpFrm = tk.Frame(root)
+	wrpFrm.configure(bg="white")
+	wrpFrm.pack(padx=3, pady=3, fill="both", expand=1)
+
+	# 読み込んだ画像リスト
+	imgList = ttk.Treeview(wrpFrm)
+	imgList.configure(column=(1,2), show="headings", height=6)
+	imgList.column(1, width=30)
+	imgList.column(2, width=361)
+	imgList.heading(1, text="No")
+	imgList.heading(2, text="path/name")
+	imgList.pack()
+
+	# ボタン中央揃え用のフレーム
+	btnFrm = tk.Frame(wrpFrm)
+	btnFrm.configure(bg="white")
+	btnFrm.pack(pady=5)
+
+	# 画像追加ボタン
+	addBtn = tk.Button(btnFrm)
+	addBtn.configure(text="画像を追加")
+	addBtn.pack(side="left", padx=5)
+
+	# 画像リセットボタン
+	resetBtn = tk.Button(btnFrm)
+	resetBtn.configure(text="画像をリセット")
+	resetBtn.pack(side="left", padx=5)
+
+	# グリッド用のFrame
+	confGridFrm = tk.Frame(wrpFrm)
+	confGridFrm.configure(bg="white")
+	confGridFrm.pack(padx=3, pady=3, fill="x")
+
+	# チェックボックス設置
+	renameChkVar = tk.BooleanVar()
+	renameChkVar.set(True)
+	renameChk = tk.Checkbutton(confGridFrm)
+	renameChk.configure(
+		text="リネームする",
+		variable=renameChkVar,
+		bg="white")
+	renameChk.grid(row=0, column=0, sticky="nw")
+
+	# ネームルールフレーム
+	renameFrm = tk.LabelFrame(confGridFrm)
+	renameFrm.configure(bg="white", text="リネームルール", relief="groove")
+	renameFrm.grid(row=0, column=1, pady=(0,5))
+
+	# レイアウト用のFrame
+	renameFrmInn = tk.Frame(renameFrm)
+	renameFrmInn.configure(bg="white")
+	renameFrmInn.pack(padx=8, pady=(0,5))
+
+	# ファイル名
+	fNameLbl = tk.Label(renameFrmInn)
+	fNameLbl.configure(text="ファイル名", bg="white")
+	fNameLbl.grid(row=0, column=0, sticky="nw")
+
+	# ファイル名入力欄
+	fNameEnt = tk.Entry(renameFrmInn)
+	fNameEnt.insert("end", "img")
+	fNameEnt.grid(row=0, column=1, pady=(0,2), sticky="w")
+
+	# 開始番号
+	fNumLbl = tk.Label(renameFrmInn, text="開始番号")
+	fNumLbl.configure(bg="white")
+	fNumLbl.grid(row=1, column=0, sticky="w")
+
+	# 開始番号入力欄
+	fNumEnt = tk.Entry(renameFrmInn, width=10)
+	fNumEnt.insert("end", "1")
+	fNumEnt.grid(row=1, column=1, sticky="w")
+
+	# アンダーバーチェック
+	usChkVar = tk.BooleanVar()
+	usChkVar.set(True)
+	usChk = tk.Checkbutton(renameFrmInn)
+	usChk.configure(
+		bg="white",
+		text="区切り文字にアンダースコア(_)を使用する",
+		variable=usChkVar)
+	usChk.grid(row=2, column=0, columnspan=2, sticky="nw")
+
+	# 出力結果タイトル
+	nResLbl = tk.Label(renameFrmInn)
+	nResLbl.configure(bg="white", text="出力結果例")
+	nResLbl.grid(row=3, column=0, sticky="w")
+
+	# 出力結果
+	nResOut = tk.Label(renameFrmInn)
+	nResOut.configure(bg="white", text="img_1.png")
+	nResOut.grid(row=3, column=1, sticky="w")
+
+	# リサイズチェック
+	resizeChkVar = tk.BooleanVar()
+	resizeChkVar.set(True)
+	resizeChk = tk.Checkbutton(confGridFrm)
+	resizeChk.configure(
+		bg="white",
+		text="幅を固定値でリサイズ",
+		variable=resizeChkVar)
+	resizeChk.grid(row=3, column=0, padx=(0,15), sticky="nw")
+
+	# リサイズ幅設定フレーム
+	resizeFrm = tk.Frame(confGridFrm)
+	resizeFrm.configure(bg="white")
+	resizeFrm.grid(row=3, column=1, sticky="nw", pady=(0,5))
+
+	# "幅"
+	resizeLbl1 = tk.Label(resizeFrm)
+	resizeLbl1.configure(bg="white", text="幅")
+	resizeLbl1.pack(side="left")
+
+	# 幅指定入力欄
+	resizeEnt = tk.Entry(resizeFrm)
+	resizeEnt.configure(width=10, relief="groove")
+	resizeEnt.insert("end", "600")
+	resizeEnt.pack(side="left", padx=(15,0))
+
+	# "px"
+	resizeLbl2 = tk.Label(resizeFrm)
+	resizeLbl2.configure(bg="white", text="px")
+	resizeLbl2.pack(side="left")
+
+	# 拡張子指定タイトル
+	extTtlLbl = tk.Label(confGridFrm)
+	extTtlLbl.configure(bg="white", text="拡張子を指定")
+	extTtlLbl.grid(row=4, column=0, sticky="nw")
+
+	# 拡張子フレーム
+	extFrm = tk.Frame(confGridFrm)
+	extFrm.configure(bg="white")
+	extFrm.grid(row=4, column=1, sticky="nw", pady=(0,5))
+
+	# "形式"
+	extLbl = tk.Label(extFrm)
+	extLbl.configure(bg="white", text="形式")
+	extLbl.pack(side="left")
+
+	# 拡張子セレクト
+	extSelect = ttk.Combobox(extFrm)
+	extSelect.configure(
+		state="readonly",
+		width=8,
+		value = ("png", "jpeg"))
+	extSelect.current(0)
+	extSelect.pack(side="left", padx=(3,0))
+
+	# 保存先タイトル
+	acvTtlLbl = tk.Label(confGridFrm)
+	acvTtlLbl.configure(bg="white", text="保存先を選択")
+	acvTtlLbl.grid(row=5, column=0, sticky="nw")
+
+	# 保存先フレーム
+	acvFrm = tk.Frame(confGridFrm)
+	acvFrm.configure(bg="white")
+	acvFrm.grid(row=5, column=1, sticky="nw", pady=(0,5))
+
+	# 保存先テキスト
+	acvLbl = tk.Label(acvFrm)
+	acvLbl.configure(text="未選択")
+	acvLbl.pack(side="left")
+
+	# 保存先テキスト
+	acvEnt = tk.Entry(acvFrm)
+	acvEnt.configure(width=33)
+	acvEnt.insert(0, "未選択")
+	acvEnt.configure(state="disabled")
+	acvEnt.pack(side="left")
+
+	# 実行ボタン
+	runBtn = tk.Button(wrpFrm)
+	runBtn.configure(text="実行")
+	runBtn.pack(
+	    anchor="e",
+	    pady=(0,5), padx=(0,5),
+	    ipadx=15, ipady=1)
+
+	# 通知リスト
+	msgList = tk.Listbox(wrpFrm)
+	msgList.configure(height=6, width=65)
+	msgList.pack()
+
+	# 進捗バー
+	pb = ttk.Progressbar(wrpFrm)
+	pb.configure(
+	    maximum=10,
+	    orient="horizontal")
+	pb.pack(pady=(4,0), fill="x")
+
+	# 描画
+	root.mainloop()
+
+
+
+実際に機能をもたせていく
+これまでは、ただひたすらレイアウトを整えていくだけでしたが、これからは、それに動的な処理を付け加えていきます。
+
+ボタンアクション
+
+まずは、画像追加イベントを追加していきましょう。
+
+画像追加ボタンを押したときのイベントを設定します。
+
+# 画像追加ボタン
+addBtn = tk.Button(btnFrm)
+addBtn.configure(text="画像を追加", command=img_add)
+addBtn.pack(side="left", padx=5)
+addBtnのプロパティを追加します。command=関数名 でボタンを押したときに呼び出す関数を指定します。
+
+addBtn.configure(text="画像を追加", command=img_add)
+先に保存先パスと取り込んだ画像のパスを保持するグローバル変数を定義します。
+
+# グローバル変数
+acv_path = ""
+f_path_list = []
+
+### この下に関数を書く ###
+tkinter.filedialogをインポートします。
+
+import tkinter as tk
+import tkinter.ttk as ttk
+import tkinter.filedialog as tkfd
+そして、img_add関数を定義します。
+
+### この下に関数を書く ###
+# 画像追加イベント
+def img_add():
+	global f_cnt, f_path_list
+	f_conf = [("Text Files", ("jpg", "png", "jpeg"))]
+	paths = tkfd.askopenfiles(filetypes=f_conf)
+	for f in paths:
+		imgList.insert("", "end", values=(len(f_path_list), f.name))
+		f_path_list.append(f.name)
+	msgList.insert(0, "画像を{0}件追加しました".format(len(paths)))
+askopenfilesで複数のファイルを参照するウィンドウを開き、リスト形式で返されるパスをpathsに代入します。filetypesで、参照できるファイル形式を指定します。
+
+f_conf = [("Text Files", ("jpg", "png", "jpeg"))]
+paths = tkfd.askopenfiles(filetypes=f_conf)
+ループでpathsを抜き出し、ファイル名をf_path_listに追加していきます。また、imgListにナンバーとパスをインサートし、msgListにメッセージとして一番上(0番目)にインサートします。
+
+for f in paths:
+	imgList.insert("", "end", values=(len(f_path_list), f.name))
+	f_path_list.append(f.name)
+msgList.insert(0, "画像を{0}件追加しました".format(len(paths)))
+実行。
+
+
+
+
+
+続けてリセットボタンも完成させましょう。
+
+リセットボタンのconfigureにcommandを指定。
+
+resetBtn.configure(text="画像をリセット", command=img_reset)
+関数を定義し処理を書く。
+
+# 画像リセットイベント
+def img_reset():
+	global f_cnt, f_path_list
+	for i in imgList.get_children():
+		imgList.delete(i)
+	f_path_list = []
+	msgList.insert(0 , "読み込んだ画像をリセットしました")
+ループでimgListの項目をすべて消し、画像パスのリストを初期化。
+
+for i in imgList.get_children():
+	imgList.delete(i)
+f_path_list = []
+実行。リセットできることを確認。
+
+
+
+
+
+「リネームする」のチェックボックスがクリックされたときのアクションをrename_status関数に指定します。
+
+renameChk.configure(
+	text="リネームする",
+	variable=renameChkVar,
+	command=rename_status,
+	bg="white")
+rename_status関数。
+
+# リネームチェックアクション
+def rename_status():
+	if renameChkVar.get():
+		state = "normal"
+		fg = "#000000"
+	else:
+		state = "disabled"
+		fg = "#666666"
+	fNameLbl["fg"] = fg
+	fNumLbl["fg"] = fg
+	nResLbl["fg"] = fg
+	nResOut["fg"] = fg
+	renameFrm["fg"] = fg
+	fNameEnt["state"] = state
+	fNumEnt["state"] = state
+	usChk["state"] = state
+チェックボックスのチェック状態は、.get()で取得出来ます。チェック中：True、チェック無し：False。
+
+if renameChkVar.get():
+こちらはfNameLbl.configure(fg=fg)と同じ意味ですが、簡素さ重視で直接代入しています。まとめると、前半の分岐でfgとstateで文字の色と状態を決め、それを後からまとめて代入しています。
+
+fNameLbl["fg"] = fg
+fNumLbl["fg"] = fg
+nResLbl["fg"] = fg
+nResOut["fg"] = fg
+renameFrm["fg"] = fg
+fNameEnt["state"] = state
+fNumEnt["state"] = state
+usChk["state"] = state
+イメージしにくいので、とりあえず実行してみましょう。
+
+リネームのチェックを外したら、右側の設定欄が操作できなくなります。これは、入力欄とチェックボックスのstateをdisabled(操作不可)に、ラベルのカラーを#666666に設定したためです。
+
+
+
+
+
+その下の「幅を固定値でリサイズ」も同じように実装します。
+
+command=resize_status
+
+resizeChk.configure(
+	bg="white",
+	text="幅を固定値でリサイズ",
+	variable=resizeChkVar,
+	command=resize_status)
+resize_status関数。
+
+# リサイズチェックアクション
+def resize_status():
+	if resizeChkVar.get():
+		state = "normal"
+		fg = "#000000"
+	else:
+		state = "disabled"
+		fg = "#666666"
+	resizeLbl1["fg"] = fg
+	resizeLbl2["fg"] = fg
+	resizeEnt["state"] = state
+
+
+保存先参照ボタンのイベント。
+
+acvBtn(保存先参照ボタン)にacv_open。
+
+acvBtn.configure(text="参照", command=acv_open)
+acv_open関数。
+
+# 保存先ディレクトリ選択
+def acv_open():
+	global acv_path
+	acv_path = tkfd.askdirectory()
+	acvEnt.configure(state="normal")
+	acvEnt.delete(0, "end")
+	if acv_path != "":
+		acvEnt.insert(0, acv_path)
+		msgList.insert(0, "保存先を{0}に設定しました".format(acv_path))
+	else:
+		acvEnt.insert(0, "未選択")
+	acvEnt.configure(state="disabled")
+askdirectoryは、フォルダのパスを参照するもので、そのパスをacv_pathに代入します。そのあと、acv_pathの中身によって分岐します。
+
+acv_path = tkfd.askdirectory()
+
+
+実行ボタンのアクション。
+
+runBtn.configure(text="実行", command=img_trans)
+新しいパッケージを4つ追加。re, os, cv2, mess。
+
+import re, os, cv2
+import tkinter as tk
+import tkinter.ttk as ttk
+import tkinter.filedialog as tkfd
+from tkinter import messagebox as mess
+それぞれの項目をgetで取得し、変数へ代入。その下で、入力チェックを行います。reの正規表現を使っています。
+
+# 画像処理
+def img_trans():
+	global f_path_list, acv_path
+	f_name  = fNameEnt.get()
+	f_num   = fNumEnt.get()
+	img_width = resizeEnt.get()
+	rename_chk = renameChkVar.get()
+	resize_chk = resizeChkVar.get()
+	# 簡易バリデーション
+	if len(f_path_list) == 0:
+		msgList.insert(0, "画像が選択されていません")
+		return None
+	if acv_path == "":
+		msgList.insert(0, "保存先を選択してください")
+		return None
+	if re.match("^[a-zA-Z0-9_]+$", f_name) is None and rename_chk:
+		msgList.insert(0, "「ファイル名」は英数字で入力して下さい")
+		return None
+	if re.match("^[0-9]+$", f_num) is None and rename_chk:
+		msgList.insert(0, "「開始番号」は数字で入力して下さい")
+		return None
+	if re.match("^[0-9]+$", img_width) is None and resize_chk:
+		msgList.insert(0, "「幅」は数字で入力して下さい")
+		return None
+img_trans後半。
+
+	msg_box = mess.askquestion("Message", "変換を開始しますか？")
+	if msg_box == "yes":
+		try:
+			for i, path in enumerate(f_path_list):
+				img_data = cv2.imread(path, -1)
+				if rename_chk:
+					f_name_result = f_name
+					if usChkVar.get():
+						f_name_result += "_"
+					f_name_result += str(i + int(f_num))
+				else:
+					f_name_result = os.path.splitext(os.path.basename(path))[0]
+				if resize_chk:
+					img_height = int(int(img_width) / img_data.shape[1] * img_data.shape[0])
+					img_data = cv2.resize(img_data, (int(img_width), img_height))
+				f_name_result += ".{0}".format(extSelect.get())
+				cv2.imwrite("{0}/{1}".format(acv_path, f_name_result), img_data)
+			msgList.insert(0, "変換完了")
+		except:
+			msgList.insert(0, "変換失敗")
+		finally:
+			pb["value"] = 10
+mess.askquestionで確認メッセージを表示します。
+
+msg_box = mess.askquestion("Message", "変換を開始しますか？")
+
+
+「はい」でyes、「いいえ」でnoが返ってきます。
+
+if msg_box == "yes":
+ここが実際に画像を加工している処理です。
+
+for i, path in enumerate(f_path_list):
+	img_data = cv2.imread(path, -1)
+	if rename_chk:
+		f_name_result = f_name
+		if usChkVar.get():
+			f_name_result += "_"
+		f_name_result += str(i + int(f_num))
+	else:
+		f_name_result = os.path.splitext(os.path.basename(path))[0]
+	if resize_chk:
+		img_height = int(int(img_width) / img_data.shape[1] * img_data.shape[0])
+		img_data = cv2.resize(img_data, (int(img_width), img_height))
+	f_name_result += ".{0}".format(extSelect.get())
+	cv2.imwrite("{0}/{1}".format(acv_path, f_name_result), img_data)
+ループで抜き出されるpathのパスにある画像データをcv2.imread()でimg_dataに代入します。
+
+img_data = cv2.imread(path, -1)
+ここでファイル名と画像サイズを決定します。cv2.resizeで簡単にサイズを変えれます。
+
+if rename_chk:
+	f_name_result = f_name
+	if usChkVar.get():
+		f_name_result += "_"
+	f_name_result += str(i + int(f_num))
+else:
+	f_name_result = os.path.splitext(os.path.basename(path))[0]
+if resize_chk:
+	img_height = int(int(img_width) / img_data.shape[1] * img_data.shape[0])
+	img_data = cv2.resize(img_data, (int(img_width), img_height))
+f_name_result += ".{0}".format(extSelect.get())
+「リネームする」にチェックがない場合は、もとのファイル名を使用します。
+
+f_name_result = os.path.splitext(os.path.basename(path))[0]
+縦幅は指定された横幅と元の画像サイズで決まります。[変換後縦 = 変換後横幅 / 変換前横幅 * 変換前縦幅]
+
+img_height = int(int(img_width) / img_data.shape[1] * img_data.shape[0])
+img_data = cv2.resize(img_data, (int(img_width), img_height))
+cv2.imwhiteで画像を書き出します。
+
+cv2.imwrite("{0}/{1}".format(acv_path, f_name_result), img_data)
+例外処理で、出力メッセージを分岐させます。最後に、進捗バーを満タンにします。処理中は描画処理がないので、これはただの飾りとなってしまいました。
+
+	msgList.insert(0, "変換完了")
+except:
+	msgList.insert(0, "変換失敗")
+finally:
+	pb["value"] = 10
+img_transのまとめ。
+
+# 画像処理
+def img_trans():
+	global f_path_list, acv_path
+	f_name  = fNameEnt.get()
+	f_num   = fNumEnt.get()
+	img_width = resizeEnt.get()
+	rename_chk = renameChkVar.get()
+	resize_chk = resizeChkVar.get()
+	# 簡易バリデーション
+	if len(f_path_list) == 0:
+		msgList.insert(0, "画像が選択されていません")
+		return None
+	if acv_path == "":
+		msgList.insert(0, "保存先を選択してください")
+		return None
+	if re.match("^[a-zA-Z0-9_]+$", f_name) is None and rename_chk:
+		msgList.insert(0, "「ファイル名」は英数字で入力して下さい")
+		return None
+	if re.match("^[0-9]+$", f_num) is None and rename_chk:
+		msgList.insert(0, "「開始番号」は数字で入力して下さい")
+		return None
+	if re.match("^[0-9]+$", img_width) is None and resize_chk:
+		msgList.insert(0, "「幅」は数字で入力して下さい")
+		return None
+	msg_box = mess.askquestion("Message", "変換を開始しますか？")
+	if msg_box == "yes":
+		try:
+			for i, path in enumerate(f_path_list):
+				img_data = cv2.imread(path, -1)
+				if rename_chk:
+					f_name_result = f_name
+					if usChkVar.get():
+						f_name_result += "_"
+					f_name_result += str(i + int(f_num))
+				else:
+					f_name_result = os.path.splitext(os.path.basename(path))[0]
+				if resize_chk:
+					img_height = int(int(img_width) / img_data.shape[1] * img_data.shape[0])
+					img_data = cv2.resize(img_data, (int(img_width), img_height))
+				f_name_result += ".{0}".format(extSelect.get())
+				cv2.imwrite("{0}/{1}".format(acv_path, f_name_result), img_data)
+			msgList.insert(0, "変換完了")
+		except:
+			msgList.insert(0, "変換失敗")
+		finally:
+			pb["value"] = 10
+
+
+最後に、「リネームする」の出力結果例の内容を入力欄の内容の変更に伴って同期させるようにします。
+
+rootの設定の真下にこいつをおきます。キーボードが押されたとき、クリックされたとき、クリック状態から離れたとき、にrename_disp関数を実行します。
+
+root.configure(bg="white")
+
+# 出力結果例更新
+root.bind("<KeyPress>", rename_disp)
+root.bind("<Button>", rename_disp)
+root.bind("<ButtonRelease>", rename_disp)
+
+### この下に描画内容を書く ###
+rename_disp関数では、入力されている項目をもとに更新させます。bindを使うときは、引数が一つ必要なので注意しましょう。
+
+# 出力結果例
+def rename_disp(self):
+	txt = ""
+	if renameChkVar.get():
+		txt = fNameEnt.get()
+		if usChkVar.get():
+			txt += "_"
+		txt += fNumEnt.get() + "." + extSelect.get()
+	nResOut["text"] = txt
+
+
+完成版（342行）
+
+import re, os, cv2
+import tkinter as tk
+import tkinter.ttk as ttk
+import tkinter.filedialog as tkfd
+from tkinter import messagebox as mess
+
+# グローバル変数
+acv_path = ""
+f_path_list = []
+
+### この下に関数を書く ###
+# 画像追加イベント
+def img_add():
+	global f_cnt, f_path_list
+	f_conf = [("Text Files", ("jpg", "png", "jpeg"))]
+	paths = tkfd.askopenfiles(filetypes=f_conf)
+	for f in paths:
+		imgList.insert("", "end", values=(len(f_path_list), f.name))
+		f_path_list.append(f.name)
+	msgList.insert(0, "画像を{0}件追加しました".format(len(paths)))
+
+# 画像リセットイベント
+def img_reset():
+	global f_cnt, f_path_list
+	for i in imgList.get_children():
+		imgList.delete(i)
+	f_path_list = []
+	msgList.insert(0 , "読み込んだ画像をリセットしました")
+
+def rename_status():
+	if renameChkVar.get():
+		state = "normal"
+		fg = "#000000"
+	else:
+		state = "disabled"
+		fg = "#666666"
+	
+	fNameLbl["fg"] = fg
+	fNumLbl["fg"] = fg
+	nResLbl["fg"] = fg
+	nResOut["fg"] = fg
+	renameFrm["fg"] = fg
+	fNameEnt["state"] = state
+	fNumEnt["state"] = state
+	usChk["state"] = state
+
+# リサイズチェック
+def resize_status():
+	if resizeChkVar.get():
+		state = "normal"
+		fg = "#000000"
+	else:
+		state = "disabled"
+		fg = "#666666"
+
+	resizeLbl1["fg"] = fg
+	resizeLbl2["fg"] = fg
+	resizeEnt["state"] = state
+
+# 保存先ディレクトリ選択
+def acv_open():
+	global acv_path
+	acv_path = tkfd.askdirectory()
+	acvEnt.configure(state="normal")
+	acvEnt.delete(0, "end")
+	if acv_path != "":
+		acvEnt.insert(0, acv_path)
+		msgList.insert(0, "保存先を{0}に設定しました".format(acv_path))
+	else:
+		acvEnt.insert(0, "未選択")
+	acvEnt.configure(state="disabled")
+
+# 画像処理
+def img_trans():
+	global f_path_list, acv_path
+	f_name  = fNameEnt.get()
+	f_num   = fNumEnt.get()
+	img_width = resizeEnt.get()
+	rename_chk = renameChkVar.get()
+	resize_chk = resizeChkVar.get()
+	# 簡易バリデーション
+	if len(f_path_list) == 0:
+		msgList.insert(0, "画像が選択されていません")
+		return None
+	if acv_path == "":
+		msgList.insert(0, "保存先を選択してください")
+		return None
+	if re.match("^[a-zA-Z0-9_]+$", f_name) is None and rename_chk:
+		msgList.insert(0, "「ファイル名」は英数字で入力して下さい")
+		return None
+	if re.match("^[0-9]+$", f_num) is None and rename_chk:
+		msgList.insert(0, "「開始番号」は数字で入力して下さい")
+		return None
+	if re.match("^[0-9]+$", img_width) is None and resize_chk:
+		msgList.insert(0, "「幅」は数字で入力して下さい")
+		return None
+	msg_box = mess.askquestion("Message", "変換を開始しますか？")
+	if msg_box == "yes":
+		try:
+			for i, path in enumerate(f_path_list):
+				img_data = cv2.imread(path, -1)
+				if rename_chk:
+					f_name_result = f_name
+					if usChkVar.get():
+						f_name_result += "_"
+					f_name_result += str(i + int(f_num))
+				else:
+					f_name_result = os.path.splitext(os.path.basename(path))[0]
+				if resize_chk:
+					img_height = int(int(img_width) / img_data.shape[1] * img_data.shape[0])
+					img_data = cv2.resize(img_data, (int(img_width), img_height))
+				f_name_result += ".{0}".format(extSelect.get())
+				cv2.imwrite("{0}/{1}".format(acv_path, f_name_result), img_data)
+			msgList.insert(0, "変換完了")
+		except:
+			msgList.insert(0, "変換失敗")
+		finally:
+			pb["value"] = 10
+
+# 出力結果例
+def rename_disp(self):
+	txt = ""
+	if renameChkVar.get():
+		txt = fNameEnt.get()
+		if usChkVar.get():
+			txt += "_"
+		txt += fNumEnt.get() + "." + extSelect.get()
+	nResOut["text"] = txt
+
+if __name__ == "__main__":
+	# メインウィンドウ生成
+	root = tk.Tk()
+	# ウィンドウタイトルを指定
+	root.title("Image editing app")
+	# ウィンドウサイズを指定
+	root.geometry("400x550")
+	# ウィンドウサイズの変更可否設定
+	root.resizable(0,0)
+	# ウィンドウの背景色
+	root.configure(bg="white")
+
+	# 名前例更新
+	root.bind("<KeyPress>", rename_disp)
+	root.bind("<Button>", rename_disp)
+	root.bind("<ButtonRelease>", rename_disp)
+
+	### この下に描画内容を書く ###
+	wrpFrm = tk.Frame(root)
+	wrpFrm.configure(bg="white")
+	wrpFrm.pack(padx=3, pady=3, fill="both", expand=1)
+
+	# 読み込んだ画像リスト
+	imgList = ttk.Treeview(wrpFrm)
+	imgList.configure(column=(1,2), show="headings", height=6)
+	imgList.column(1, width=30)
+	imgList.column(2, width=361)
+	imgList.heading(1, text="No")
+	imgList.heading(2, text="path/name")
+	imgList.pack()
+
+	# ボタン中央揃え用のフレーム
+	btnFrm = tk.Frame(wrpFrm)
+	btnFrm.configure(bg="white")
+	btnFrm.pack(pady=5)
+
+	# 画像追加ボタン
+	addBtn = tk.Button(btnFrm)
+	addBtn.configure(text="画像を追加", command=img_add)
+	addBtn.pack(side="left", padx=5)
+
+	# 画像リセットボタン
+	resetBtn = tk.Button(btnFrm)
+	resetBtn.configure(text="画像をリセット", command=img_reset)
+	resetBtn.pack(side="left", padx=5)
+
+	# グリッド用のFrame
+	confGridFrm = tk.Frame(wrpFrm)
+	confGridFrm.configure(bg="white")
+	confGridFrm.pack(padx=3, pady=3, fill="x")
+
+	# チェックボックス設置
+	renameChkVar = tk.BooleanVar()
+	renameChkVar.set(True)
+	renameChk = tk.Checkbutton(confGridFrm)
+	renameChk.configure(
+		text="リネームする",
+		variable=renameChkVar,
+		command=rename_status,
+		bg="white")
+	renameChk.grid(row=0, column=0, sticky="nw")
+
+	# ネームルールフレーム
+	renameFrm = tk.LabelFrame(confGridFrm)
+	renameFrm.configure(bg="white", text="リネームルール", relief="groove")
+	renameFrm.grid(row=0, column=1, pady=(0,5))
+
+	# レイアウト用のFrame
+	renameFrmInn = tk.Frame(renameFrm)
+	renameFrmInn.configure(bg="white")
+	renameFrmInn.pack(padx=8, pady=(0,5))
+
+	# ファイル名
+	fNameLbl = tk.Label(renameFrmInn)
+	fNameLbl.configure(text="ファイル名", bg="white")
+	fNameLbl.grid(row=0, column=0, sticky="nw")
+
+	# ファイル名入力欄
+	fNameEnt = tk.Entry(renameFrmInn)
+	fNameEnt.insert("end", "img")
+	fNameEnt.grid(row=0, column=1, pady=(0,2), sticky="w")
+
+	# 開始番号
+	fNumLbl = tk.Label(renameFrmInn, text="開始番号")
+	fNumLbl.configure(bg="white")
+	fNumLbl.grid(row=1, column=0, sticky="w")
+
+	# 開始番号入力欄
+	fNumEnt = tk.Entry(renameFrmInn, width=10)
+	fNumEnt.insert("end", "1")
+	fNumEnt.grid(row=1, column=1, sticky="w")
+
+	# アンダーバーチェック
+	usChkVar = tk.BooleanVar()
+	usChkVar.set(True)
+	usChk = tk.Checkbutton(renameFrmInn)
+	usChk.configure(
+		bg="white",
+		text="区切り文字にアンダースコア(_)を使用する",
+		variable=usChkVar)
+	usChk.grid(row=2, column=0, columnspan=2, sticky="nw")
+
+	# 出力結果タイトル
+	nResLbl = tk.Label(renameFrmInn)
+	nResLbl.configure(bg="white", text="出力結果例")
+	nResLbl.grid(row=3, column=0, sticky="w")
+
+	# 出力結果
+	nResOut = tk.Label(renameFrmInn)
+	nResOut.configure(bg="white", text="img_1.png")
+	nResOut.grid(row=3, column=1, sticky="w")
+
+	# リサイズチェック
+	resizeChkVar = tk.BooleanVar()
+	resizeChkVar.set(True)
+	resizeChk = tk.Checkbutton(confGridFrm)
+	resizeChk.configure(
+		bg="white",
+		text="幅を固定値でリサイズ",
+		variable=resizeChkVar,
+		command=resize_status)
+	resizeChk.grid(row=3, column=0, padx=(0,15), sticky="nw")
+
+	# リサイズ幅設定フレーム
+	resizeFrm = tk.Frame(confGridFrm)
+	resizeFrm.configure(bg="white")
+	resizeFrm.grid(row=3, column=1, sticky="nw", pady=(0,5))
+
+	# "幅"
+	resizeLbl1 = tk.Label(resizeFrm)
+	resizeLbl1.configure(bg="white", text="幅")
+	resizeLbl1.pack(side="left")
+
+	# 幅指定入力欄
+	resizeEnt = tk.Entry(resizeFrm)
+	resizeEnt.configure(width=10, relief="groove")
+	resizeEnt.insert("end", "600")
+	resizeEnt.pack(side="left", padx=(15,0))
+
+	# "px"
+	resizeLbl2 = tk.Label(resizeFrm)
+	resizeLbl2.configure(bg="white", text="px")
+	resizeLbl2.pack(side="left")
+
+	# 拡張子指定タイトル
+	extTtlLbl = tk.Label(confGridFrm)
+	extTtlLbl.configure(bg="white", text="拡張子を指定")
+	extTtlLbl.grid(row=4, column=0, sticky="nw")
+
+	# 拡張子フレーム
+	extFrm = tk.Frame(confGridFrm)
+	extFrm.configure(bg="white")
+	extFrm.grid(row=4, column=1, sticky="nw", pady=(0,5))
+
+	# "形式"
+	extLbl = tk.Label(extFrm)
+	extLbl.configure(bg="white", text="形式")
+	extLbl.pack(side="left")
+
+	# 拡張子セレクト
+	extSelect = ttk.Combobox(extFrm)
+	extSelect.configure(
+		state="readonly",
+		width=8,
+		value = ("png", "jpeg"))
+	extSelect.current(0)
+	extSelect.pack(side="left", padx=(3,0))
+
+	# 保存先タイトル
+	acvTtlLbl = tk.Label(confGridFrm)
+	acvTtlLbl.configure(bg="white", text="保存先を選択")
+	acvTtlLbl.grid(row=5, column=0, sticky="nw")
+
+	# 保存先フレーム
+	acvFrm = tk.Frame(confGridFrm)
+	acvFrm.configure(bg="white")
+	acvFrm.grid(row=5, column=1, sticky="nw", pady=(0,5))
+
+	# 保存先テキスト
+	acvEnt = tk.Entry(acvFrm)
+	acvEnt.configure(width=33)
+	acvEnt.insert(0, "未選択")
+	acvEnt.configure(state="disabled")
+	acvEnt.pack(side="left")
+
+	# 保存先参照ボタン
+	acvBtn = tk.Button(acvFrm)
+	acvBtn.configure(text="参照", command=acv_open)
+	acvBtn.pack(side="left")
+
+	# 実行ボタン
+	runBtn = tk.Button(wrpFrm)
+	runBtn.configure(text="実行", command=img_trans)
+	runBtn.pack(
+	    anchor="e",
+	    pady=(0,5), padx=(0,5),
+	    ipadx=15, ipady=1)
+
+	# 通知リスト
+	msgList = tk.Listbox(wrpFrm)
+	msgList.configure(height=6, width=65)
+	msgList.pack()
+
+	# 進捗バー
+	pb = ttk.Progressbar(wrpFrm)
+	pb.configure(
+	    maximum=10,
+	    orient="horizontal")
+	pb.pack(pady=(4,0), fill="x")
+
+	# 描画
+	root.mainloop()
+
+
+実行ファイルにする
+出来上がったプログラムをwindowsで使えるexeファイルに書き出します。
+
+コマンドプロンプトでpyinstallerをpipします。
+
+pip install pyinstaller
+プログラムファイルのあるディレクトリに移動します。
+
+cd desktop/tk_app
+このコマンドを実行して、少し待ちます。コンソールアプリケーションの場合は--noconsoleは消してください。
+
+pyinstaller main.py --onefile --noconsole
+なんかいろいろ作成されます。
+
+
+
+本体はdistフォルダにいます。
+
+
+
+ちゃんと実行できましたね。
+
+
+
+
+
+おつかれさまでした。ぼくもつかれました。
+
+twitter @kzkzkazz
+
+#プログラミング
+#python
+#python3
+#tkinter
+この記事が気に入ったら、サポートをしてみませんか？
+気軽にクリエイターの支援と、記事のオススメができます！
+
+気に入ったらサポート
+
+18
+
+
+
+
+
+kazz
+
+フォロー
+このクリエイターの人気記事
+PHPで簡単なWebAPIを実装してみる【初心者向け】
+68
+kazz
+
+PHPで簡単なWebAPIを実装してみる【初心者向け】
+こちらでもピックアップされています
+python
+python
+6本
+コメントを投稿するには、 ログイン または 会員登録 をする必要があります。
+こちらもおすすめ
+
+デザイナーでもできる！Lottieでアニメーションを実装す…
+124
+
+ohs
+
+FigmaではじめるUI（Web）デザイン｜Part…
+789
+
+Nao Komura
+
+Illustrator スクリプト入門 01（はじめ…
+143
+
+宮澤聖二 | onthehead
+
+Sketchで大活躍のショートカット集
+101
+
+ikutani41
+
+Chapter 2: Figmaの基本操作
+61
+
+ふじけん / kenshir0f
+
+Figma FAQ 、 よくある質問  #01
+90
+
+hikarutayama
+
+UIデザイナーでもできる！はじめてのUnity UI…
+211
+
+まちるだ / MESON
+即席！ｽｳﾞｪﾙﾁｮｸ導入ガイド
+6
+
+nbng
+
+Figma でざっくり作るプロトタイピング
+141
+
+Spacemarket Design
+
+Sketchのプラグインを作る①
+28
+
+Yukiya Okuda
+
+JavaScriptをはじめよう #2 VSCode…
+63
+
+erukiti
+
+Illustrator スクリプト入門 02（ドキュメントを軽く見…
+41
+
+宮澤聖二 | onthehead
+
+18
+
+
+
+
+noteプレミアム
+note pro
+よくある質問・noteの使い方
+記事
+マガジン
+ユーザー
+ハッシュタグ
+プライバシー
+ご利用規約
+特商法表記
+クリエイターへのお問い合わせ
+noteカイゼン目安箱
+クリエイターの推薦
+
+

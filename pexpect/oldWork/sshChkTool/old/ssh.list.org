@@ -1,0 +1,11 @@
+# aaaaaaa
+#パスワード, sshコマンド
+# aaaaaaaa
+
+#yasuyuki   , ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -l yasuyuki
+yasuyuki   , /usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+
+
+
+
+

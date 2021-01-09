@@ -1,0 +1,20 @@
+★ : ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -l root
+Warning: Permanently added '192.169.0.151' (ECDSA) to the list of known hosts.
+root@192.169.0.151's password: yasuyuki
+
+Last login: Mon Sep 30 07:07:45 2019 from 192.169.0.1
+]0;root@y151:~[?1034h[root@y151 ~]# 
+
+]0;root@y151:~[root@y151 ~]# 
+★ : /usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+Warning: Permanently added '192.169.0.151' (ECDSA) to the list of known hosts.
+Last login: Mon Sep 30 07:07:51 2019 from 192.169.0.1
+]0;yamanakayasuyuki@y151:~[?1034h[yamanakayasuyuki@y151 ~]$ 
+
+]0;yamanakayasuyuki@y151:~[yamanakayasuyuki@y151 ~]$ 
+★ : /usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+Warning: Permanently added '192.169.0.151' (ECDSA) to the list of known hosts.
+Last login: Mon Sep 30 07:08:15 2019 from 192.169.0.1
+]0;yamanakayasuyuki@y151:~[?1034h[yamanakayasuyuki@y151 ~]$ 
+
+]0;yamanakayasuyuki@y151:~[yamanakayasuyuki@y151 ~]$ 

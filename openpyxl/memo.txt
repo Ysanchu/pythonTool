@@ -1,0 +1,3 @@
+
+ $ pip download -d src --no-binary :all: openpyxl
+

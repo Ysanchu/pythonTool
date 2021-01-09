@@ -1,0 +1,20 @@
+
+pip download -d src --no-binary :all: python-pptx
+
+
+yamanakukinoMBP:pptx yamanakayasuyuki$ ./pptxOpe.py.org 
+Traceback (most recent call last):
+  File "./pptxOpe.py.org", line 10, in <module>
+    from PIL import Image
+  File "./src/Pillow-7.1.2/src/PIL/Image.py", line 93, in <module>
+    from . import _imaging as core
+ImportError: cannot import name '_imaging' from 'PIL' (./src/Pillow-7.1.2/src/PIL/__init__.py)
+
+
+from . import _imaging as core
+  libtiffパッケージをインストールすることによりエラー出ないようになりました。（パッケージの依存関係の解決がうまくいってなかったのかな？）
+  conda install libtiff
+
+
+src うまく行かない → pipインストールする
+

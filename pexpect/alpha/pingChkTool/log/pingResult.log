@@ -1,0 +1,3 @@
+sd-tstctl-och01   ,  ping -I 10.20.10.7 -c 1 10.20.10.8 : OK
+sd-tstctl-och01   ,  ping -I 10.20.10.7 -c 1 10.20.10.9 : OK
+sd-tstctl-och01   ,  ping -I 10.20.10.7 -c 1 10.10.10.10 :    NG!

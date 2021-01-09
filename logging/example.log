@@ -1,0 +1,36 @@
+DEBUG:root:This message should go to the log file
+INFO:root:So should this
+WARNING:root:And this, too
+DEBUG:root:This message should go to the log file
+INFO:root:So should this
+WARNING:root:And this, too
+2020/06/06 06:57:30 This message should go to the log file
+2020/06/06 06:57:30 So should this
+2020/06/06 06:57:30 And this, too
+2020/06/06 06:57:56   This message should go to the log file
+2020/06/06 06:57:56   So should this
+2020/06/06 06:57:56   And this, too
+2020/06/06 06:59:11   DEBUG This message should go to the log file
+2020/06/06 06:59:11   INFO So should this
+2020/06/06 06:59:11   WARNING And this, too
+2020/06/06 07:00:09   DEBUG-This message should go to the log file
+2020/06/06 07:00:09   INFO-So should this
+2020/06/06 07:00:09   WARNING-And this, too
+2020/06/06 07:00:32   <DEBUG> This message should go to the log file
+2020/06/06 07:00:32   <INFO> So should this
+2020/06/06 07:00:32   <WARNING> And this, too
+2020/06/06 07:01:43   <DEBUG> %(name)s - (message)s
+2020/06/06 07:01:43   <INFO> %(name)s - (message)s
+2020/06/06 07:01:43   <WARNING> %(name)s - (message)s
+2020/06/06 07:02:42   <DEBUG> root - This message should go to the log file
+2020/06/06 07:02:42   <INFO> root - So should this
+2020/06/06 07:02:42   <WARNING> root - And this, too
+2020/06/06 07:03:10   <DEBUG>root - This message should go to the log file
+2020/06/06 07:03:10   <INFO>root - So should this
+2020/06/06 07:03:10   <WARNING>root - And this, too
+2020/06/06 07:03:14   <DEBUG>root - This message should go to the log file
+2020/06/06 07:03:14   <INFO>root - So should this
+2020/06/06 07:03:14   <WARNING>root - And this, too
+2020/06/06 07:03:47   <DEBUG> root - This message should go to the log file
+2020/06/06 07:03:47   <INFO> root - So should this
+2020/06/06 07:03:47   <WARNING> root - And this, too

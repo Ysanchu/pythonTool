@@ -1,0 +1,5 @@
+yamanakukinoMBP , yasuyuki   , ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -l root  : OK!
+yamanakukinoMBP , yasuyuki   , /usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  : OK!
+yamanakukinoMBP ,  ,  /usr/bin/ssh 192.169.0.151 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  : OK!
+sd-tstctl-dms01 , :    NG! 読み込みエラー。 [ ./sshChk.list ] を確認して下さい。
+sd-tstctl-dms02 , :    NG! 読み込みエラー。 [ ./sshChk.list ] を確認して下さい。

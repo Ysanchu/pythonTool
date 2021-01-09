@@ -1,0 +1,14 @@
+
+
+○ install
+  # pip3 install pytube
+
+○ 参考
+  pytubeを使ってみよう
+  https://qiita.com/pycys/items/4ac9c80be216401eb68b
+  ※ ↑を参考にするだけ。。簡単。。
+
+  - サンプル動画
+   【Eラーニング／JLPT対策講座サンプル動画】.mp4  (1:20)
+    https://www.youtube.com/watch?v=ePoRyZMtyUU
+

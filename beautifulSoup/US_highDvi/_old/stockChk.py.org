@@ -1,0 +1,24 @@
+#!/usr/local/bin/python3
+from bs4 import BeautifulSoup
+import requests
+
+##Python’s html.parser	“html.parser”  追加ライブラリが不要
+##lxml’s HTML parser    “lxml”         高速に処理可
+##lxml’s XML parser     “xml”          XMLに対応し、高速に処理可
+##html5lib              “html5lib”     正しくHTML5を処理可
+#url = 'https://news.yahoo.co.jp'
+url = 'https://stocks.finance.yahoo.co.jp/stocks/detail/?code=8591.T'
+response = requests.get(url)
+#print(response.text)
+soup = BeautifulSoup(response.text ,"html.parser")
+stockName = soup.find_all("h1")
+print(elems)
+
+#### Main
+###if __name__ == "__main__":
+###    #yamanayTest()
+###    #nikkeiScraping()
+###    #yahooStockInfoGet()
+###    yahooStockInfoGet_2()
+###    #test()
+
