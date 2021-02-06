@@ -1,6 +1,9 @@
 
-🌟pip ソース(tar.gz)のみダウンロード🌟
+🌟 pip ソース(tar.gz)のみダウンロード 🌟
   # pip download -d src --no-binary :all: openpyxl      # openpyxlソースをダウンロード
+
+○ pip自体のアップデート
+  # pip install -U pip
 
 ■ pip一括Update
   # pip3 list -o | awk 'NR>2{print$1}' | xargs pip3 install -U
@@ -64,6 +67,11 @@
   Pythonファイルをexe化するライブラリ
   # pip install pyinstaller
     (Macは.appでできる?)
+
+■ pyautogui
+  Pythonでマウスとキーボードを操るライブラリ
+  https://qiita.com/konitech913/items/301bb63c8a69c3fcb1bd
+  $ pip install 
 
 <<注意点>>
   ★ モジュール名とファイル名を一致させない。モジュールではなくファイルから

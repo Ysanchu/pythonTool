@@ -34,3 +34,42 @@ WARNING:root:And this, too
 2020/06/06 07:03:47   <DEBUG> root - This message should go to the log file
 2020/06/06 07:03:47   <INFO> root - So should this
 2020/06/06 07:03:47   <WARNING> root - And this, too
+2021-11-01 12:45:42  <DEBUG>  root - This message should go to the log file
+2021-11-01 12:45:42  <INFO>  root - So should this
+2021-11-01 12:45:42  <WARNING>  root - And this, too
+2021-11-01 11:35:37.252 <DEBUG> root - This message should go to the log file
+2021-11-01 11:35:37.253 <INFO> root - So should this
+2021-11-01 11:35:37.253 <WARNING> root - And this, too
+2021-12-01 12:16:20.910 <DEBUG> root - This message should go to the log file
+2021-12-01 12:16:20.910 <INFO> root - So should this
+2021-12-01 12:16:20.910 <WARNING> root - And this, too
+2021-12-01 12:28:21.115 <DEBUG> root - This message should go to the log file
+2021-12-01 12:28:21.116 <INFO> root - So should this
+2021-12-01 12:28:21.116 <WARNING> root - And this, too
+2021-01-12 12:33:24.682 <DEBUG> 25 root - This message should go to the log file
+2021-01-12 12:33:24.683 <INFO> 26 root - So should this
+2021-01-12 12:33:24.683 <WARNING> 27 root - And this, too
+2021-01-12 12:34:27.238 <DEBUG> 25 root - This message should go to the log file loggingTest testFunc
+2021-01-12 12:34:27.238 <INFO> 26 root - So should this loggingTest testFunc
+2021-01-12 12:34:27.238 <WARNING> 27 root - And this, too loggingTest testFunc
+2021-01-12 12:35:54.153 <DEBUG> root - This message should go to the log file [loggingTest.py testFunc:25]
+2021-01-12 12:35:54.153 <INFO> root - So should this [loggingTest.py testFunc:26]
+2021-01-12 12:35:54.153 <WARNING> root - And this, too [loggingTest.py testFunc:27]
+2021-01-12 12:36:58.671 <DEBUG> root - This message should go to the log file [loggingTest.py:25]
+2021-01-12 12:36:58.671 <INFO> root - So should this [loggingTest.py:26]
+2021-01-12 12:36:58.671 <WARNING> root - And this, too [loggingTest.py:27]
+2021-01-12 12:44:42.953 <DEBUG> root - This message should go to the log file [loggingTest.py:25]
+2021-01-12 12:44:42.953 <INFO> root - So should this [loggingTest.py:26]
+2021-01-12 12:44:42.953 <WARNING> root - And this, too [loggingTest.py:27]
+2021-01-12 01:13:41.433 <DEBUG> root - This message should go to the log file [loggingTest.py:31]
+2021-01-12 01:13:41.433 <INFO> root - So should this [loggingTest.py:32]
+2021-01-12 01:13:41.433 <WARNING> root - And this, too [loggingTest.py:33]
+2021-01-12 01:13:54.495 <DEBUG> root - This message should go to the log file [loggingTest.py:31]
+2021-01-12 01:13:54.495 <INFO> root - So should this [loggingTest.py:32]
+2021-01-12 01:13:54.496 <WARNING> root - And this, too [loggingTest.py:33]
+2021-01-12 01:23:31.960 <DEBUG> root - This message should go to the log file [loggingTest.py:31]
+2021-01-12 01:23:31.960 <INFO> root - So should this [loggingTest.py:32]
+2021-01-12 01:23:31.960 <WARNING> root - And this, too [loggingTest.py:33]
+2021-01-12 01:24:20.680 <DEBUG> root - This message should go to the log file [loggingTest.py:31]
+2021-01-12 01:24:20.681 <INFO> root - So should this [loggingTest.py:32]
+2021-01-12 01:24:20.681 <WARNING> root - And this, too [loggingTest.py:33]

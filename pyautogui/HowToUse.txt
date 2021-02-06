@@ -1,0 +1,95 @@
+
+○ 同時押し
+  hotkey('ctrl', 'c') 
+
+○ copy活用
+  pyperclip.copy("これでいける")　←これでクリップボードに引数を保存できる
+  pyautogui.hotkey('ctrl', 'v’)　←これでその場にペーストする
+
+○ 10秒掛けて移動
+  pyautogui.moveTo(1279, 116, duration=10)
+
+★ 入力モード
+  pyautogui.press("kanji")
+  pyautogui.press("kana")
+  ※ fn キーが使えない。。
+ 
+■ 数字、アルファベット、記号
+  pyautogui.press("1")
+  pyautogui.press("a")
+  pyautogui.press("A")
+  pyautogui.press("@")
+  pyautogui.press("$")
+  
+■ Enter
+  pyautogui.press("enter")
+  pyautogui.press("return")
+  pyautogui.press("\n")
+  
+■ Esc
+  pyautogui.press("esc")
+  
+■ Shift
+  pyautogui.press("shift")
+  
+■ Alt [win]
+  pyautogui.press("alt")
+  
+■ Ctrl
+  pyautogui.press("ctrl")
+  
+■ Tab
+  pyautogui.press("tab")
+  pyautogui.press("\t")
+  
+■ Backspace
+  pyautogui.press("backspace")
+  
+■ Delete
+  pyautogui.press("delete")
+  pyautogui.press("del")
+  
+■ Insert
+  pyautogui.press("insert")
+  
+■ PrintScreen
+  pyautogui.press("printscreen")
+  pyautogui.press("prntscrn")
+  
+■ Home、End
+  pyautogui.press("home")
+  pyautogui.press("end")
+  
+■ カーソル
+  pyautogui.press("up")
+  pyautogui.press("right")
+  pyautogui.press("down")
+  pyautogui.press("left")
+  
+■ ファンクション
+  pyautogui.press("f1")
+  
+■ ロック
+  pyautogui.press("numlock")
+  pyautogui.press("capslock")
+  pyautogui.press("scrolllock")
+  
+■ 音量
+  pyautogui.press("volumemute")
+  pyautogui.press("volumeup")
+  pyautogui.press("volumedown")
+  
+  
+ 
+■ Windows
+  pyautogui.press("win")
+  
+★ command、option
+  pyautogui.press("command")
+  pyautogui.press("option")
+
+
+
+
+
+

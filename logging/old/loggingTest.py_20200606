@@ -3,11 +3,11 @@
 import sys,os,re,csv,pwd,subprocess
 import logging
 """
- python作成の定型文
- Usage :
+python作成の定型文
+Usage :
 
- ■ Python_logging
-   https://docs.python.org/ja/3/howto/logging.html
+■Python_logging
+ https://docs.python.org/ja/3/howto/logging.html
 """
 
 __author__  = 'SANCHU'
@@ -19,15 +19,9 @@ __date__    = 'YYYY/MM/DD'
 def testFunc():
     print("testFunc")
     #logging.basicConfig(format='%(asctime)s %(message)s' , datefmt='%Y/%d/%m %I:%M:%S')
-    file_handler = logging.FileHandler(filename='tmp.log')
-    stdout_handler = logging.StreamHandler(sys.stdout)
-    handlers = [file_handler, stdout_handler]
-
-
-    logging.basicConfig(filename='example.log',level=logging.DEBUG,
-        format='%(asctime)s.%(msecs)-03d <%(levelname)s> %(name)s - %(message)s [%(module)s.py:%(lineno)s]', 
-        datefmt='%Y-%m-%d %I:%M:%S')
-    
+    logging.basicConfig(filename='example.log',level=logging.DEBUG,    \
+        format='%(asctime)s   <%(levelname)s> %(name)s - %(message)s', \
+        datefmt='%Y-%d-%m %I:%M:%S')
     logging.debug('This message should go to the log file')
     logging.info('So should this')
     logging.warning('And this, too')
