@@ -31,7 +31,7 @@
 ■ shutil
   ファイル操作できる
 
-■ urllib
+★ urllib
   urllibはPythonからURLにアクセスしたり、インターネット上のファイルを
   取得したりすることができるパッケージ
 

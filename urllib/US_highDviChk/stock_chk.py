@@ -31,7 +31,7 @@ def usStockChk():
     print("ticker\t株価\t配当利回り")
     print("------------------------------")
     # リストファイル指定 & 読み込み
-    fileName = 'stockTicker.list'
+    fileName = 'stock_ticker.list'
     with open(fileName, mode='r') as readed_file:
         for lineStr in readed_file:
             # 改行コードの削除
