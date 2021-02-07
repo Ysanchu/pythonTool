@@ -226,6 +226,7 @@ def test_exe_func():
     pyautogui.click(799, 349, interval=1)
 
     # 「辞書のエクスポートが完了しました」メッセージOK
+    # clickで反応しなかったため、「mouseDown -> mouseUp」で対応
     # pyautogui.click(733, 422, clicks=2, interval=0.3)
     pyautogui.moveTo(733, 422)
     # pyautogui.doubleClick()
